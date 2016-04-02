@@ -64,14 +64,12 @@ end
 function keysCC(k, cc)
     if k == "up" and cc.y + cc.img[frame]:getHeight() * cc.scale >= FLOOR then
         cc.v = 200
-        --for i = 5, 15 do
-          --cc.x = cc.x + i
-        --end
         love.audio.play(jumpSound)
+        cc.x = cc.x + 35
+
     end
 end
 
---FIXME: Alterar velocidade quando é atingido
 function collisionDetectionCC(cc, obstacles)
     if cc.cooldown <= 0 then
         for i = 1, #obstacles do
