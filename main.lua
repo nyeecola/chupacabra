@@ -80,6 +80,9 @@ function game:update(dt)
     -- geracao de obstaculos novos
     generateObstacle(obstacles, dt)
 
+    -- animacao de obstaculos
+    animateObstacles(dt)
+
     --Desenha no canvas
     love.graphics.setCanvas(canvas)
     drawCC(cc)
@@ -92,13 +95,15 @@ end
 function game:draw()
 	background.draw_bg()
 
+    love.graphics.setColor(255, 255, 255)
+    drawObstacles(obstacles)
+    love.graphics.setColor(255, 255, 255)
+
     --Desenha o canvas
     love.graphics.draw(canvas)
     canvas:clear()
     --FPS
     love.graphics.print(love.timer.getFPS(), 0, 0)
-
-    drawObstacles(obstacles)
 end
 
 function game:keypressed(k)
