@@ -1,7 +1,7 @@
-gamestate = require("gamestate")
-require("chupacabra")
-require 'obstacles'
-require 'move'
+gamestate = require "bin.gamestate"
+require "bin.chupacabra"
+require 'bin.obstacles'
+require 'bin.move'
 
 FLOOR = 400
 
@@ -37,7 +37,7 @@ end
 function game:update(dt)
     --Movimento do ChupaCabra
     moveCC(cc, FLOOR, dt)
-    
+
     -- movimento do mundo
     move(dt, obstacles)
 
