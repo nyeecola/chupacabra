@@ -5,5 +5,5 @@ function love.conf(t)
     t.window.vsync = false
     t.window.fsaa = 16
 
-    t.version = "0.10.1"
+    t.version = "0.9.2"
 end
