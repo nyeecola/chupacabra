@@ -7,13 +7,13 @@ function newWhey(x, y, img, scale)
     return whey
 end
 
-local createWheyTimer = 12
+local createWheyTimer = -1
 function updateWheys(wheys, floor, dt)
     --gera cabras em tempo aleatorio
     createWheyTimer = createWheyTimer - (1 * dt)
     if createWheyTimer < 0 then
         table.insert(wheys, newWhey(800, floor, love.graphics.newImage("assets/whey.png"), 1))
-        createWheyTimer = math.random(4, 12)
+        createWheyTimer = math.random(4, 6)
     end
 
     for i = 1, #wheys do
@@ -33,6 +33,7 @@ function collisionDetectionWhey(cc, wheys)
         if cc.x + cc.img[frame]:getWidth()*cc.scale > wheys[i].x and cc.x + cc.img[frame]:getWidth()*cc.scale < wheys[i].x + wheys[i].img:getWidth()*wheys[i].scale then
             if (wheys[i].y <= cc.y and cc.y <= wheys[i].y + wheys[i].img:getHeight()*wheys[i].scale) or (wheys[i].y <= cc.y + cc.img[frame]:getHeight()*cc.scale and cc.y + cc.img[frame]:getHeight()*cc.scale <= wheys[i].y + wheys[i].img:getHeight()*wheys[i].scale) or (cc.y <= wheys[i].y and wheys[i].y <= cc.y + cc.img[frame]:getHeight()*cc.scale) or (cc.y <= wheys[i].y + wheys[i].img:getHeight()*wheys[i].scale and wheys[i].y + wheys[i].img:getHeight()*wheys[i].scale <= cc.y + cc.img[frame]:getHeight()*cc.scale)then
                 cc.stamina = cc.stamina + 80
+                bambam = true
                 table.remove(wheys, i)
                 love.audio.play(wheySound[math.random(1,3)])
             end
