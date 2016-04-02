@@ -14,7 +14,6 @@ local game = {}
 local pause = {}
 local gameover = {}
 local canvas = love.graphics.newCanvas()
-local createGoatTimer = -1
 
 function menu:enter()
 
@@ -52,13 +51,6 @@ function game:update(dt)
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
-
-    --gera cabras em tempo aleatorio
-    createGoatTimer = createGoatTimer - (1 * dt)
-    if createGoatTimer < 0 then
-        table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 1))
-        createGoatTimer = math.random(2, 6)
-    end
     
     --Colisao com obstaculos
     collisionDetectionCC(cc, obstacles)

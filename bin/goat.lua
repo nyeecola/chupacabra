@@ -6,9 +6,17 @@ function newGoat(x, y, img, scale)
     goat.img = img
     goat.scale = scale
     return goat
-end
+end 
 
+local createGoatTimer = -1
 function updateGoats(goats, floor, dt)
+    --gera cabras em tempo aleatorio
+    createGoatTimer = createGoatTimer - (1 * dt)
+    if createGoatTimer < 0 then
+        table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 1))
+        createGoatTimer = math.random(2, 6)
+    end
+    
     for i = 1, #goats do
         goats[i].x = goats[i].x - 60 * dt
         goats[i].y = goats[i].y - goats[i].v * dt
