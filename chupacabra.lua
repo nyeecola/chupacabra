@@ -18,6 +18,7 @@ function moveCC(chupacabra, floor, dt)
 end
 
 function drawCC(chupacabra)
+    love.graphics.setColor(255, 255, 255)
     love.graphics.draw(cc.img, cc.x, cc.y, 0, 0.15, 0.15)
 end
 

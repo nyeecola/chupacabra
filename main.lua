@@ -1,5 +1,7 @@
 gamestate = require("gamestate")
 require("chupacabra")
+require 'obstacles'
+require 'move'
 
 FLOOR = 400
 
@@ -25,11 +27,19 @@ function game:enter()
 
     cc = {}
     defineCC(cc, FLOOR)
+
+    for i = 1, 3 do
+        obstacles[i] = generateObstacle(math.random(600), math.random(200, 500))
+        print(obstacles[i].x, obstacles[i].y)
+    end
 end
 
 function game:update(dt)
     --Movimento do ChupaCabra
     moveCC(cc, FLOOR, dt)
+    
+    -- movimento do mundo
+    move(dt, obstacles)
 
     --Desenha no canvas
     love.graphics.setCanvas(canvas)
@@ -41,6 +51,7 @@ function game:draw()
     love.graphics.draw(canvas)
     canvas:clear()
     love.graphics.print(love.timer.getFPS(), 0, 0)
+    drawObstacles(obstacles)
 end
 
 function game:keypressed(k)
@@ -49,6 +60,7 @@ end
 
 function game:leave()
     cc = nil
+    obstacles = nil
 end
 
 function love.load()
