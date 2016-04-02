@@ -64,7 +64,7 @@ function game:update(dt)
     move(dt, obstacles)
 
     -- geracao de obstaculos novos
-    generateObstacle(obstacles, dt, 800, math.random(200, FLOOR))
+    generateObstacle(obstacles, dt)
 
     --Desenha no canvas
     love.graphics.setCanvas(canvas)

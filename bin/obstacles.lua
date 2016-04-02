@@ -37,31 +37,31 @@ function drawObstacles(obstacles)
 end
 
 -- function to procedurally generate obstacles
-function createRandomObstacle(x, y)
+function createRandomObstacle()
     local obstacles = {
         newObstacle(
             100,
             50,
             {r = 255, g = 0, b = 255},
             nil,
-            x,
-            y
+            800,
+            FLOOR - 100 - 1
         ),
         newObstacle(
             60,
             100,
             {r = 255, g = 0, b = 0},
             nil,
-            x,
-            y
+            800,
+            FLOOR - 60 - 1
         ),
         newObstacle(
             50,
             50,
             {r = 0, g = 0, b = 255},
             nil,
-            x,
-            y
+            800,
+            math.random(200, 300)
         )
     }
 
@@ -70,11 +70,11 @@ function createRandomObstacle(x, y)
     return obstacles[selected]
 end
 
-function generateObstacle(obstacles, dt, x, y)
+function generateObstacle(obstacles, dt)
     cooldown = cooldown - dt
 
     if cooldown < 0 then
         cooldown = COOLDOWN_START
-        table.insert(obstacles, #obstacles, createRandomObstacle(x, y))
+        table.insert(obstacles, #obstacles + 1, createRandomObstacle())
     end
 end
