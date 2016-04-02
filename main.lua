@@ -7,6 +7,8 @@ require "bin.goat"
 
 FLOOR = 500
 
+background = require("background")
+
 local menu = {}
 local game = {}
 local pause = {}
@@ -35,10 +37,14 @@ function game:enter()
     people = {}
     definePeople(people)
 
+	background.enter_bg()
+
     table.insert(goats, newGoat(600, 400, love.graphics.newImage("assets/goat.png"), 1))
 end
 
 function game:update(dt)
+	background.update_bg(dt)
+
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
@@ -75,6 +81,8 @@ function game:update(dt)
 end
 
 function game:draw()
+	background.draw_bg()
+
     --Desenha o canvas
     love.graphics.draw(canvas)
     canvas:clear()
