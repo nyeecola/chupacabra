@@ -1,4 +1,5 @@
-local COOLDOWN_START = 2
+local COOLDOWN_START = 1.5
+local COOLDOWN_MAX = 4
 local SCALE = 0.25
 
 local cooldown = COOLDOWN_START
@@ -104,7 +105,7 @@ function generateObstacle(obstacles, dt)
     cooldown = cooldown - dt
 
     if cooldown < 0 then
-        cooldown = COOLDOWN_START
+        cooldown = math.random(COOLDOWN_START, COOLDOWN_MAX)
         table.insert(obstacles, #obstacles + 1, createRandomObstacle())
     end
 end
