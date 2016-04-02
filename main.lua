@@ -136,7 +136,7 @@ function game:update(dt)
         bambam = false
         bambam_dt = 0
     end
-    
+
 end
 
 function game:draw()
@@ -170,11 +170,44 @@ function game:leave()
 end
 
 function gameover:enter()
+    imgs = {cc = love.graphics.newImage("assets/cc/01.png"),
+            people = love.graphics.newImage("assets/people.png"),
+            campfire = {love.graphics.newImage("assets/fogueira1.png"),
+                        love.graphics.newImage("assets/fogueira2.png"),
+                        love.graphics.newImage("assets/fogueira3.png")}}
+    timer = 0
+    frame = 1
+end
 
+function gameover:update(dt)
+    timer = timer + dt
+
+    if timer > 0.2 then
+        timer = 0
+        if frame == 3 then
+            frame = 1
+        else
+            frame = frame +1
+        end
+    end
 end
 
 function gameover:draw()
-    love.graphics.print("uau")
+    font = love.graphics.newFont("assets/font.ttf", 80)
+    love.graphics.setFont(font)
+    love.graphics.print("GAME OVER", 160, 200)
+    font = love.graphics.newFont("assets/font.ttf", 40)
+    love.graphics.setFont(font)
+    love.graphics.print("Score: " .. string.format("%.0f", score), 300, 300)
+    font = love.graphics.newFont("assets/font.ttf", 20)
+    love.graphics.setFont(font)
+    love.graphics.print("Press Return to Restart", 250, 560)
+    love.graphics.draw(imgs.cc, 470, 400, math.pi/2, 0.75, 0.75)
+    love.graphics.draw(imgs.campfire[frame], 340, 370, 0, 0.6, 0.6)
+    love.graphics.setColor(255, 255, 255, 140)
+    love.graphics.draw(imgs.cc, 470, 400, math.pi/2, 0.75, 0.75)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.draw(imgs.people, 230, 380, 0, 0.5, 0.5)
 end
 
 function gameover:keypressed(k)
@@ -184,7 +217,7 @@ function gameover:keypressed(k)
 end
 
 function love.load()
-    local font = love.graphics.newFont("assets/font.ttf", 20)
+    font = love.graphics.newFont("assets/font.ttf", 20)
     love.graphics.setFont(font)
     math.randomseed(os.clock())
     gamestate.registerEvents()
