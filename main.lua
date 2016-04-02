@@ -1,3 +1,4 @@
+intro = require 'intro.main'
 gamestate = require "bin.gamestate"
 require "bin.chupacabra"
 require 'bin.obstacles'
@@ -10,7 +11,7 @@ FLOOR = 500
 background = require("background")
 
 local menu = {}
-local game = {}
+game = {}
 local pause = {}
 local gameover = {}
 local canvas = love.graphics.newCanvas()
@@ -118,5 +119,6 @@ end
 function love.load()
     math.randomseed(os.clock())
     gamestate.registerEvents()
+    -- gamestate.switch(intro)
     gamestate.switch(game)
 end
