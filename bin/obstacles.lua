@@ -16,7 +16,6 @@ function drawObstacles(obstacles)
     -- TODO: show image too
     for i = 1, #obstacles do
         local obstacle = obstacles[i]
-        print(obstacle.x, obstacle.y)
         love.graphics.setColor(
             obstacle.color.r,
             obstacle.color.g,
@@ -59,7 +58,7 @@ function generateObstacle(x, y)
             x,
             y
         )
-    }    
+    }
 
     local selected = math.random(3)
 

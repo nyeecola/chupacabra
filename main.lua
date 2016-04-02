@@ -28,17 +28,19 @@ function game:enter()
     cc = {}
     defineCC(cc, FLOOR)
 
-    for i = 1, 3 do
-        obstacles[i] = generateObstacle(math.random(600), math.random(200, 500))
-        print(obstacles[i].x, obstacles[i].y)
+    for i = 1, 1 do
+        obstacles[i] = generateObstacle(800, math.random(200, 500))
     end
 end
 
 function game:update(dt)
-    --Movimento do ChupaCabra
-    moveCC(cc, FLOOR, dt)
+    --Atualiza o ChupaCabra
+    updateCC(cc, FLOOR, dt)
 
-    -- movimento do mundo
+    --Colisao
+    collisionDetectionCC(cc, obstacles)
+
+    --Movimento do mundo
     move(dt, obstacles)
 
     --Desenha no canvas
@@ -50,12 +52,12 @@ end
 function game:draw()
     love.graphics.draw(canvas)
     canvas:clear()
-    love.graphics.print(love.timer.getFPS(), 0, 0)
+    love.graphics.print(cc.cooldown, 0, 0)
     drawObstacles(obstacles)
 end
 
 function game:keypressed(k)
-    keysCC(k)
+    keysCC(k, cc)
 end
 
 function game:leave()
