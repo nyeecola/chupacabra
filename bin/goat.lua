@@ -33,6 +33,7 @@ function collisionDetectionGoat(cc, goats)
             if (goats[i].y <= cc.y and cc.y <= goats[i].y + goats[i].img:getHeight()*goats[i].scale) or (goats[i].y <= cc.y + cc.img:getHeight()*cc.scale and cc.y + cc.img:getHeight()*cc.scale <= goats[i].y + goats[i].img:getHeight()*goats[i].scale) or (cc.y <= goats[i].y and goats[i].y <= cc.y + cc.img:getHeight()*cc.scale) or (cc.y <= goats[i].y + goats[i].img:getHeight()*goats[i].scale and goats[i].y + goats[i].img:getHeight()*goats[i].scale <= cc.y + cc.img:getHeight()*cc.scale)then
                 cc.stamina = cc.stamina +40
                 table.remove(goats, i)
+                love.audio.play(goatSound)
             end
         end
    end

@@ -42,6 +42,7 @@ end
 function keysCC(k, cc)
     if k == "up" and cc.y + cc.img:getHeight() * cc.scale >= FLOOR then
         cc.v = 200
+        love.audio.play(jumpSound)
     end
 end
 
