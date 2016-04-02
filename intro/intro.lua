@@ -13,7 +13,7 @@ function intro:update(dt)
         end
     if ii>= num
         then
-            gamestate.switch(game)
+            gamestate.switch(menu)
         end
     if ii== 54
         then
@@ -27,7 +27,7 @@ function intro:update(dt)
         then
             love.audio.stop(sound_rcg)
             love.audio.stop(sound_bg)
-            gamestate.switch(game)
+            gamestate.switch(menu)
         end
 end
 
