@@ -6,6 +6,7 @@ require 'bin.obstacles'
 require 'bin.move'
 require "bin.people"
 require "bin.goat"
+require "bin.whey"
 require "bin.stamina"
 
 FLOOR = 500
@@ -33,6 +34,7 @@ function game:enter()
 
     obstacles = {}
     goats = {}
+    wheys = {}
 
     staminaBar = {}
     defineBar(staminaBar)
@@ -47,8 +49,13 @@ function game:enter()
 
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
+    wheySound = {}
+    wheySound[1] = love.audio.newSource("assets/hora-do-show.ogg", "static")
+    wheySound[2] = love.audio.newSource("assets/bodybuilder-porra.ogg", "static")
+    wheySound[3] = love.audio.newSource("assets/trapezio-descendente.ogg", "static")
     gameOverSound = love.audio.newSource("assets/game-over.ogg", "static")
     collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
+
 end
 
 function game:update(dt)
@@ -58,6 +65,7 @@ function game:update(dt)
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
+    updateWheys(wheys, FLOOR-40, dt)
 
     --Atualiza pontuacao
     score = score + dt
@@ -74,6 +82,7 @@ function game:update(dt)
 
     --Colisao com cabra
     collisionDetectionGoat(cc, goats)
+    collisionDetectionWhey(cc, wheys)
 
     --Colisao com wall
     if cc.x > 650 and cc.stamina > 0 then
@@ -92,6 +101,7 @@ function game:update(dt)
     --Desenha no canvas
     love.graphics.setCanvas(canvas)
     drawCC(cc)
+    drawWheys(wheys)
     drawPeople(people)
     drawGoats(goats)
     drawBar(staminaBar, cc)
@@ -146,6 +156,6 @@ function love.load()
     love.graphics.setFont(font)
     math.randomseed(os.clock())
     gamestate.registerEvents()
-    gamestate.switch(intro)
-    --gamestate.switch(game)
+    --gamestate.switch(intro)
+    gamestate.switch(game)
 end
