@@ -7,17 +7,17 @@ function newWhey(x, y, img, scale)
     return whey
 end
 
-local createWheyTimer = -1
+local createWheyTimer = math.random(10, 22)
 function updateWheys(wheys, floor, dt)
     --gera cabras em tempo aleatorio
     createWheyTimer = createWheyTimer - (1 * dt)
     if createWheyTimer < 0 then
         table.insert(wheys, newWhey(800, floor, love.graphics.newImage("assets/whey.png"), 1))
-        createWheyTimer = math.random(4, 6)
+        createWheyTimer = math.random(10, 22)
     end
 
     for i = 1, #wheys do
-        wheys[i].x = wheys[i].x - 60 * dt
+        wheys[i].x = wheys[i].x - OBJECTS_SPD * dt
     end
 end
 

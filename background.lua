@@ -23,6 +23,10 @@ function spawn_initial_trees()
 	x = 200
 	y = math.random(290, 310)
 	table.insert(trees, #trees+1, {x = x, y = y})
+
+    x = 450
+	y = math.random(290, 310)
+	table.insert(trees, #trees+1, {x = x, y = y})
 end
 
 function spawn_initial_front_trees()
@@ -31,6 +35,14 @@ function spawn_initial_front_trees()
 	table.insert(front_trees, #front_trees+1, {x = x, y = y})
 
 	x = 200
+	y = math.random(480,500)
+	table.insert(front_trees, #front_trees+1, {x = x, y = y})
+
+    x = 450
+	y = math.random(480,500)
+	table.insert(front_trees, #front_trees+1, {x = x, y = y})
+
+    x = 650
 	y = math.random(480,500)
 	table.insert(front_trees, #front_trees+1, {x = x, y = y})
 end
@@ -141,7 +153,7 @@ function background.enter_bg()
 	night_state = 1
 
 
-	day_cicle_speed = 0.1
+	day_cicle_speed = 0.3
 
 end
 
@@ -187,7 +199,7 @@ function background.update_bg(dt)
 
 	-- Moving trees
 	for i = 1, #trees do
-		trees[i].x = trees[i].x - 30 * dt
+		trees[i].x = trees[i].x - BACKGROUND_SPD * dt
 	end
 
 	-- Removing trees
@@ -206,7 +218,7 @@ function background.update_bg(dt)
 
 	-- Moving front trees
 	for i = 1, #front_trees do
-		front_trees[i].x = front_trees[i].x - 70 * dt
+		front_trees[i].x = front_trees[i].x - FOREGROUND_SPD * dt
 	end
 
 	-- Removing front trees
@@ -234,8 +246,11 @@ function background.draw_bg()
 	for i = 1, #trees do
 		love.graphics.draw(trees_image, trees[i].x, trees[i].y)
 	end
+end
 
-	for i = 1, #front_trees do
+function background.draw_fg()
+    love.graphics.setColor(255, 255, 255)
+    for i = 1, #front_trees do
 		love.graphics.draw(trees_image, front_trees[i].x, front_trees[i].y)
 	end
 end

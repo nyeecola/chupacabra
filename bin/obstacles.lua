@@ -1,5 +1,5 @@
-local COOLDOWN_START = 1.5
-local COOLDOWN_MAX = 4
+COOLDOWN_START = 1.8
+COOLDOWN_MAX = 4
 local SCALE = 0.25
 
 local cooldown = COOLDOWN_START

@@ -10,7 +10,11 @@ require "bin.whey"
 require "bin.stamina"
 
 FLOOR = 500
+BACKGROUND_SPD = 90
+OBJECTS_SPD = 220
+FOREGROUND_SPD = 300
 
+local spd_timer = 0
 local menu = {}
 game = {}
 bambam = false
@@ -61,6 +65,14 @@ function game:enter()
 end
 
 function game:update(dt)
+
+    -- dirt hack
+    spd_timer = spd_timer + dt
+    if cc.stamina < 5 and spd_timer > 0.3 then
+        cc.stamina = cc.stamina + 7
+        spd_timer = 0
+    end
+
     --Atualiza fundo
 	background.update_bg(dt)
 
@@ -87,8 +99,17 @@ function game:update(dt)
     collisionDetectionWhey(cc, wheys)
 
     --Colisao com wall
-    if cc.x > 650 and cc.stamina > 0 then
+    if cc.x > 550 and cc.stamina > 0 then
+        OBJECTS_SPD = 270
+        COOLDOWN_START = 0.8
+        COOLDOWN_MAX = 2
         cc.stamina = 0
+    end
+
+    if cc.x < 450 then
+        OBJECTS_SPD = 220
+        COOLDOWN_START = 1.2
+        COOLDOWN_MAX = 2.6
     end
 
     --Movimento do mundo
@@ -109,9 +130,9 @@ function game:update(dt)
     drawBar(staminaBar, cc)
     love.graphics.setCanvas()
 
-    if bambam == true and bambam_dt < 5 then
+    if bambam == true and bambam_dt < 2.5 then
         bambam_dt = bambam_dt + dt
-    elseif bambam == true and bambam_dt >= 5 then
+    elseif bambam == true and bambam_dt >= 2.5 then
         bambam = false
         bambam_dt = 0
     end
@@ -135,8 +156,8 @@ function game:draw()
     --Score
     love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)
 
-    drawObstacles(obstacles)
-
+    -- draw foreground
+    background.draw_fg()
 end
 
 function game:keypressed(k)
