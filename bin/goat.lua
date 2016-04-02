@@ -15,9 +15,9 @@ function updateGoats(goats, floor, dt)
     createGoatTimer = createGoatTimer - (1 * dt)
     if createGoatTimer < 0 then
         if(math.random(1, 20) == 10) then
-            table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/explosiveGoat.png"), 1, true))
+            table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/explosiveGoat.png"), 0.5, true))
         else
-            table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 1, false))
+            table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 0.5, false))
         end
         createGoatTimer = math.random(2, 6)
     end
@@ -27,7 +27,7 @@ function updateGoats(goats, floor, dt)
         goats[i].y = goats[i].y - goats[i].v * dt
         if goats[i].y + goats[i].img:getHeight() * goats[i].scale >= floor then
             goats[i].y = floor - goats[i].img:getHeight() * goats[i].scale
-            goats[i].v = 200
+            goats[i].v = math.random(260, 350)
         end
         goats[i].v = goats[i].v - 190*dt
     end
