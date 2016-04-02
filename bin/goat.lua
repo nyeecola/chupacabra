@@ -28,7 +28,7 @@ function drawGoats(goats)
 end
 
 function collisionDetectionGoat(cc, goats)
-    for i = 1, #goats do
+    for i = #goats, 1, -1 do
         if cc.x + cc.img:getWidth()*cc.scale > goats[i].x and cc.x + cc.img:getWidth()*cc.scale < goats[i].x + goats[i].img:getWidth()*goats[i].scale then
             if (goats[i].y <= cc.y and cc.y <= goats[i].y + goats[i].img:getHeight()*goats[i].scale) or (goats[i].y <= cc.y + cc.img:getHeight()*cc.scale and cc.y + cc.img:getHeight()*cc.scale <= goats[i].y + goats[i].img:getHeight()*goats[i].scale) or (cc.y <= goats[i].y and goats[i].y <= cc.y + cc.img:getHeight()*cc.scale) or (cc.y <= goats[i].y + goats[i].img:getHeight()*goats[i].scale and goats[i].y + goats[i].img:getHeight()*goats[i].scale <= cc.y + cc.img:getHeight()*cc.scale)then
                 cc.stamina = cc.stamina +40
