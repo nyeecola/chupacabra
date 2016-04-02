@@ -156,6 +156,6 @@ function love.load()
     love.graphics.setFont(font)
     math.randomseed(os.clock())
     gamestate.registerEvents()
-    --gamestate.switch(intro)
-    gamestate.switch(game)
+    gamestate.switch(intro)
+    --gamestate.switch(game)
 end
