@@ -1,4 +1,4 @@
-intro = require 'intro.main'
+intro = require 'intro.intro'
 gamestate = require "bin.gamestate"
 require "bin.chupacabra"
 require 'bin.obstacles'
@@ -39,7 +39,7 @@ function game:enter()
     people = {}
     definePeople(people)
 
-	background.enter_bg() 
+	background.enter_bg()
 end
 
 function game:update(dt)
@@ -55,7 +55,7 @@ function game:update(dt)
         table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 1))
         createGoatTimer = math.random(2, 6)
     end
-    
+
     --Colisao com obstaculos
     collisionDetectionCC(cc, obstacles)
 
@@ -119,6 +119,6 @@ end
 function love.load()
     math.randomseed(os.clock())
     gamestate.registerEvents()
-    -- gamestate.switch(intro)
-    gamestate.switch(game)
+    gamestate.switch(intro)
+    --gamestate.switch(game)
 end

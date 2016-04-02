@@ -23,6 +23,12 @@ function intro:update(dt)
         then
             love.audio.play(sound_bg)
         end
+    if love.keyboard.isDown("return")  or love.keyboard.isDown(" ")
+        then
+            love.audio.stop(sound_rcg)
+            love.audio.stop(sound_bg)
+            gamestate.switch(game)
+        end
 end
 
 function intro:enter()
