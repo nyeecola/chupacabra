@@ -1,14 +1,14 @@
 intro = require 'intro.intro'
 gamestate = require "bin.gamestate"
+background = require("background")
 require "bin.chupacabra"
 require 'bin.obstacles'
 require 'bin.move'
 require "bin.people"
 require "bin.goat"
+require "bin.stamina"
 
 FLOOR = 500
-
-background = require("background")
 
 local menu = {}
 game = {}
@@ -31,6 +31,9 @@ end
 function game:enter()
     obstacles = {}
     goats = {}
+
+    staminaBar = {}
+    defineBar(staminaBar)
 
     cc = {}
     defineCC(cc, FLOOR)
@@ -82,6 +85,7 @@ function game:update(dt)
     drawCC(cc)
     drawPeople(people)
     drawGoats(goats)
+    drawBar(staminaBar, cc)
     love.graphics.setCanvas()
 end
 
@@ -115,6 +119,8 @@ function gameover:draw()
 end
 
 function love.load()
+    local font = love.graphics.newFont("assets/font.ttf", 20)
+    love.graphics.setFont(font)
     math.randomseed(os.clock())
     gamestate.registerEvents()
     gamestate.switch(intro)
