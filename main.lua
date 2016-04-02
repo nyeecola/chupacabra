@@ -41,8 +41,8 @@ function game:enter()
     
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
-    deathSound = love.audio.newSource("assets/chupacabra-morrendo.ogg", "static")
-    mobSound = love.audio.newSource("assets/multidao.ogg", "static")
+    gameOverSound = love.audio.newSource("assets/game-over.ogg", "static")
+    collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
 end
 
 function game:update(dt)
@@ -58,8 +58,7 @@ function game:update(dt)
     --Colisao com pessoas
     if cc.x < 10 then
         gamestate.switch(gameover)
-        love.audio.play(mobSound)
-        love.audio.play(deathSound)
+        love.audio.play(gameOverSound)
         return
     end
 

@@ -53,6 +53,7 @@ function collisionDetectionCC(cc, obstacles)
                 if (obstacles[i].y <= cc.y and cc.y <= obstacles[i].y + obstacles[i].height) or (obstacles[i].y <= cc.y + cc.img:getHeight()*cc.scale and cc.y + cc.img:getHeight()*cc.scale <= obstacles[i].y + obstacles[i].height) or (cc.y <= obstacles[i].y and obstacles[i].y <= cc.y + cc.img:getHeight()*cc.scale) or (cc.y <= obstacles[i].y + obstacles[i].height and obstacles[i].y + obstacles[i].height <= cc.y + cc.img:getHeight()*cc.scale)then
                     cc.stamina = cc.stamina -40
                     cc.cooldown = 2
+                    love.audio.play(collisionSound)
                 end
             end
        end
