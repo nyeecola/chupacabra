@@ -29,6 +29,8 @@ function menu:leave()
 end
 
 function game:enter()
+    score = 0
+
     obstacles = {}
     goats = {}
 
@@ -42,7 +44,7 @@ function game:enter()
     definePeople(people)
 
 	background.enter_bg()
-    
+
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
     gameOverSound = love.audio.newSource("assets/game-over.ogg", "static")
@@ -50,12 +52,16 @@ function game:enter()
 end
 
 function game:update(dt)
+    --Atualiza fundo
 	background.update_bg(dt)
 
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
-    
+
+    --Atualiza pontuacao
+    score = score + dt
+
     --Colisao com obstaculos
     collisionDetectionCC(cc, obstacles)
 
@@ -102,8 +108,14 @@ function game:draw()
     --Desenha o canvas
     love.graphics.draw(canvas)
     canvas:clear()
+
     --FPS
     love.graphics.print(love.timer.getFPS(), 0, 0)
+
+    --Score
+    love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)
+
+    drawObstacles(obstacles)
 end
 
 function game:keypressed(k)
@@ -121,6 +133,12 @@ end
 
 function gameover:draw()
     love.graphics.print("uau")
+end
+
+function gameover:keypressed(k)
+    if k == "return" then
+        gamestate.switch(game)
+    end
 end
 
 function love.load()

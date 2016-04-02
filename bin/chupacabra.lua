@@ -49,12 +49,13 @@ end
 function collisionDetectionCC(cc, obstacles)
     if cc.cooldown <= 0 then
         for i = 1, #obstacles do
-            if cc.x + cc.img:getWidth()*cc.scale > obstacles[i].x and cc.x + cc.img:getWidth()*cc.scale < obstacles[i].x + obstacles[i].width then
-                if (obstacles[i].y <= cc.y and cc.y <= obstacles[i].y + obstacles[i].height) or (obstacles[i].y <= cc.y + cc.img:getHeight()*cc.scale and cc.y + cc.img:getHeight()*cc.scale <= obstacles[i].y + obstacles[i].height) or (cc.y <= obstacles[i].y and obstacles[i].y <= cc.y + cc.img:getHeight()*cc.scale) or (cc.y <= obstacles[i].y + obstacles[i].height and obstacles[i].y + obstacles[i].height <= cc.y + cc.img:getHeight()*cc.scale)then
+            if cc.x < obstacles[i].x + obstacles[i].width and
+               obstacles[i].x < cc.x + cc.img:getWidth()*cc.scale and
+               cc.y < obstacles[i].y + obstacles[i].height and
+               obstacles[i].y < cc.y + cc.img:getHeight()*cc.scale then
                     cc.stamina = cc.stamina -40
                     cc.cooldown = 2
                     love.audio.play(collisionSound)
-                end
             end
        end
    end
