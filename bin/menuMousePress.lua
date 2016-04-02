@@ -4,6 +4,7 @@ function menuMousePressed(x, y, button)
 
            -- Start
         if optionMouseOver(x,y,294,294+212,190,190+89) then
+            love.mousepressed = function () end
             gamestate.switch(game)
 
             -- Info
