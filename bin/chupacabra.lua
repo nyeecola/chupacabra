@@ -10,14 +10,14 @@ end
 
 function updateCC(cc, floor, dt)
     cc.x = cc.x + cc.stamina * dt
-    cc.y = cc.y - cc.v * dt
+    cc.y = cc.y - cc.v * dt * 2
     if cc.y + cc.img:getHeight() * cc.scale >= floor then
         cc.y = floor - cc.img:getHeight() * cc.scale
         cc.v = 0
     end
-    cc.v = cc.v - 190*dt
+    cc.v = cc.v - 390*dt
 
-    if cc.cooldown > 0 then
+    if cc.cooldown > 0 then --When Chupa Cabra dies
         cc.cooldown = cc.cooldown - dt
     else
         cc.cooldown = 0

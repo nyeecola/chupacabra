@@ -1,5 +1,5 @@
 GENERAL_DELAY = 0.012
-GENERAL_SPEED = 2
+GENERAL_SPEED = 2 --Set obstacles speed
 
 local last_move_delay = 0
 
@@ -9,13 +9,13 @@ function move(dt, objects)
     if last_move_delay < GENERAL_DELAY then
         return
     end
-        
+
     for i = 1, #objects do
         local object = objects[i]
 
         object.x = object.x - GENERAL_SPEED
     end
-    
+
     for i = #objects, 1, -1 do
         local object = objects[i]
 
