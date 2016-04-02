@@ -1,8 +1,8 @@
 function definePeople(people)
-    people.x = -20
-    people.y = 400
+    people.x = 10
+    people.y = 450
     people.scale = 0.3
-    people.img = love.graphics.newImage("assets/pessoas.png")
+    people.img = love.graphics.newImage("assets/people.png")
 end
 
 function drawPeople(people)
