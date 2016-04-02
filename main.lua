@@ -2,12 +2,14 @@ gamestate = require "bin.gamestate"
 require "bin.chupacabra"
 require 'bin.obstacles'
 require 'bin.move'
+require "bin.people"
 
-FLOOR = 400
+FLOOR = 500
 
 local menu = {}
 local game = {}
 local pause = {}
+local gameover = {}
 local canvas = love.graphics.newCanvas()
 
 function menu:enter()
@@ -27,6 +29,9 @@ function game:enter()
 
     cc = {}
     defineCC(cc, FLOOR)
+
+    people = {}
+    definePeople(people)
 end
 
 function game:update(dt)
@@ -35,6 +40,12 @@ function game:update(dt)
 
     --Colisao
     collisionDetectionCC(cc, obstacles)
+
+    --Colisao com pessoas
+    if cc.x < 10 then
+        gamestate.switch(gameover)
+        return
+    end
 
     --Movimento do mundo
     move(dt, obstacles)
@@ -45,13 +56,14 @@ function game:update(dt)
     --Desenha no canvas
     love.graphics.setCanvas(canvas)
     drawCC(cc)
+    drawPeople(people)
     love.graphics.setCanvas()
 end
 
 function game:draw()
     love.graphics.draw(canvas)
     canvas:clear()
-    love.graphics.print(cc.cooldown, 0, 0)
+    love.graphics.print(love.timer.getFPS(), 0, 0)
     drawObstacles(obstacles)
 end
 
@@ -62,6 +74,14 @@ end
 function game:leave()
     cc = nil
     obstacles = nil
+end
+
+function gameover:enter()
+
+end
+
+function gameover:draw()
+    love.graphics.print("uau")
 end
 
 function love.load()
