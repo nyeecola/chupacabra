@@ -1,4 +1,5 @@
-local COOLDOWN_START = 2
+local COOLDOWN_START = 1.5
+local COOLDOWN_MAX = 4
 local SCALE = 0.25
 
 local cooldown = COOLDOWN_START
@@ -63,19 +64,21 @@ end
 function createRandomObstacle()
     local fat_bird = {}
     local campfire = {}
+    local trunk = {}
     for i = 1, 3 do
         fat_bird[i] = love.graphics.newImage('assets/birdFat' .. i .. '.png')
         campfire[i] = love.graphics.newImage('assets/fogueira' .. i .. '.png')
+        trunk[i] = love.graphics.newImage('assets/tronco.png')
     end
 
     local obstacles = {
         newObstacle(
-            80,
-            40,
+            trunk[1]:getHeight() * SCALE,
+            trunk[1]:getWidth() * SCALE,
             {r = 255, g = 0, b = 255},
-            nil,
+            trunk,
             800,
-            FLOOR - 80 - 1
+            FLOOR - trunk[1]:getHeight() * SCALE - 1
         ),
         newObstacle(
             campfire[1]:getHeight() * SCALE,
@@ -104,7 +107,7 @@ function generateObstacle(obstacles, dt)
     cooldown = cooldown - dt
 
     if cooldown < 0 then
-        cooldown = COOLDOWN_START
+        cooldown = math.random(COOLDOWN_START, COOLDOWN_MAX)
         table.insert(obstacles, #obstacles + 1, createRandomObstacle())
     end
 end
