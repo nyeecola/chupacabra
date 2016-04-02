@@ -1,6 +1,7 @@
 local background = {}
 
-local timer = 0
+local cloud_timer = 0
+local trees_timer = 0
 
 function spawn_cloud()
 	local x = 800
@@ -11,6 +12,22 @@ end
 function spawn_sun()
 	sun_position_x = 400
 	sun_position_y = -125
+end
+
+function spawn_initial_trees()
+	local x = -50
+	local y = math.random(290, 310)
+	table.insert(trees, #trees+1, {x = x, y = y})
+
+	x = 200
+	y = math.random(290, 310)
+	table.insert(trees, #trees+1, {x = x, y = y})
+end
+
+function spawn_trees()
+	local x = 800
+	local y = math.random(290, 310)
+	table.insert(trees, #trees+1, {x = x, y = y})
 end
 
 function spawn_moon()
@@ -76,6 +93,7 @@ end
 function background.enter_bg()
 	-- Table wich contains all clouds
 	clouds = {}
+	trees = {}
 	-- Clock for cloud spawning
 	
 	-- Red Green and Blue variables for color shifting
@@ -84,33 +102,35 @@ function background.enter_bg()
 	cloud_image = love.graphics.newImage("imagens/cloud.png")
 	sun_image = love.graphics.newImage("imagens/sun.png")
 	moon_image = love.graphics.newImage("imagens/moon.png")
+	trees_image = love.graphics.newImage("imagens/trees.png")
 
 	-- Spawning the first cloud
 	spawn_cloud()
 	spawn_sun()
 	spawn_moon()
+	spawn_initial_trees()
+	spawn_trees()
 
 	day_state = 1
 	night_state = 1
 
 
-	day_cicle_speed = 15
+	day_cicle_speed = 17
 
 end
 
 function background.update_bg(dt)
 	-- Spawning clouds
-	timer = timer + dt
-	if timer > math.random(3, 6) then
+	cloud_timer = cloud_timer + dt
+	if cloud_timer > math.random(3, 6) then
 		spawn_cloud()
-		timer = 0
+		cloud_timer = 0
 	end
 
 	-- Moving clouds
 	for i = 1, #clouds do
 		clouds[i].x = clouds[i].x - 125 * dt
 	end
-	-- print(#clouds)
 
 	-- Removing clouds
 	for i = #clouds, 1, -1 do
@@ -119,7 +139,7 @@ function background.update_bg(dt)
 		end
 	end
 
-
+	-- Day state 
 	if day_state == 1 then
 		twilight(dt)
 	end
@@ -132,6 +152,25 @@ function background.update_bg(dt)
 		dawn(dt)
 	end
 
+	-- Spawning trees
+	trees_timer = trees_timer + dt
+	if trees_timer > math.random(4, 10) then
+		spawn_trees()
+		trees_timer = 0
+	end
+
+	-- Moving trees
+	for i = 1, #trees do
+		trees[i].x = trees[i].x - 30 * dt
+	end
+
+	-- Removing clouds
+	for i = #trees, 1, -1 do
+		if trees[i].x < -500 then
+			table.remove(trees, i)
+		end
+	end
+
 end
 
 function background.draw_bg()
@@ -140,8 +179,13 @@ function background.draw_bg()
 	love.graphics.draw(moon_image, moon_position_x, moon_position_y)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.setBackgroundColor(color_r, color_g, color_b)
+	
 	for i = 1, #clouds do
 		love.graphics.draw(cloud_image, clouds[i].x, clouds[i].y)
+	end
+	
+	for i = 1, #trees do
+		love.graphics.draw(trees_image, trees[i].x, trees[i].y)
 	end
 end
 
