@@ -15,7 +15,6 @@ game = {}
 local pause = {}
 local gameover = {}
 local canvas = love.graphics.newCanvas()
-local createGoatTimer = -1
 
 function menu:enter()
 
@@ -40,6 +39,11 @@ function game:enter()
     definePeople(people)
 
 	background.enter_bg()
+    
+    jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
+    goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
+    gameOverSound = love.audio.newSource("assets/game-over.ogg", "static")
+    collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
 end
 
 function game:update(dt)
@@ -48,20 +52,14 @@ function game:update(dt)
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
-
-    --gera cabras em tempo aleatorio
-    createGoatTimer = createGoatTimer - (1 * dt)
-    if createGoatTimer < 0 then
-        table.insert(goats, newGoat(800, FLOOR, love.graphics.newImage("assets/goat.png"), 1))
-        createGoatTimer = math.random(2, 6)
-    end
-
+    
     --Colisao com obstaculos
     collisionDetectionCC(cc, obstacles)
 
     --Colisao com pessoas
     if cc.x < 10 then
         gamestate.switch(gameover)
+        love.audio.play(gameOverSound)
         return
     end
 
