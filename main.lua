@@ -3,6 +3,7 @@ require "bin.chupacabra"
 require 'bin.obstacles'
 require 'bin.move'
 require "bin.people"
+require "bin.goat"
 
 FLOOR = 500
 
@@ -26,25 +27,37 @@ end
 
 function game:enter()
     obstacles = {}
+    goats = {}
 
     cc = {}
     defineCC(cc, FLOOR)
 
     people = {}
     definePeople(people)
+
+    table.insert(goats, newGoat(600, 400, love.graphics.newImage("assets/goat.png"), 1))
 end
 
 function game:update(dt)
     --Atualiza o ChupaCabra
     updateCC(cc, FLOOR, dt)
+    updateGoats(goats, FLOOR, dt)
 
-    --Colisao
+    --Colisao com obstaculos
     collisionDetectionCC(cc, obstacles)
 
     --Colisao com pessoas
     if cc.x < 10 then
         gamestate.switch(gameover)
         return
+    end
+
+    --Colisao com cabra
+    collisionDetectionGoat(cc, goats)
+
+    --Colisao com wall
+    if cc.x > 650 and cc.stamina > 0 then
+        cc.stamina = 0
     end
 
     --Movimento do mundo
@@ -57,13 +70,17 @@ function game:update(dt)
     love.graphics.setCanvas(canvas)
     drawCC(cc)
     drawPeople(people)
+    drawGoats(goats)
     love.graphics.setCanvas()
 end
 
 function game:draw()
+    --Desenha o canvas
     love.graphics.draw(canvas)
     canvas:clear()
+    --FPS
     love.graphics.print(love.timer.getFPS(), 0, 0)
+
     drawObstacles(obstacles)
 end
 
