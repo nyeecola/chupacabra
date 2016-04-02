@@ -43,9 +43,9 @@ end
 function collisionDetectionGoat(cc, goats)
     for i = #goats, 1, -1 do
         if cc.x < goats[i].x + goats[i].img:getWidth()*goats[i].scale and
-           goats[i].x < cc.x + cc.img:getWidth()*cc.scale and
+           goats[i].x < cc.x + cc.img[frame]:getWidth()*cc.scale and
            cc.y < goats[i].y + goats[i].img:getHeight()*goats[i].scale and
-           goats[i].y < cc.y + cc.img:getHeight()*cc.scale then
+           goats[i].y < cc.y + cc.img[frame]:getHeight()*cc.scale then
                if goats[i].explosive then
                    cc.stamina = cc.stamina -40
                else
