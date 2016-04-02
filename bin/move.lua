@@ -14,12 +14,15 @@ function move(dt, objects)
         local object = objects[i]
 
         object.x = object.x - GENERAL_SPEED
+    end
+    
+    for i = #objects, 1, -1 do
+        local object = objects[i]
 
         if object.x < -object.width then
-            -- object = table.remove(objects, i)
+            object = table.remove(objects, i)
             object = nil
         end
     end
-    
     last_move_delay = 0
 end

@@ -27,10 +27,6 @@ function game:enter()
 
     cc = {}
     defineCC(cc, FLOOR)
-
-    for i = 1, 1 do
-        obstacles[i] = generateObstacle(800, math.random(200, 500))
-    end
 end
 
 function game:update(dt)
@@ -42,6 +38,9 @@ function game:update(dt)
 
     --Movimento do mundo
     move(dt, obstacles)
+
+    -- geracao de obstaculos novos
+    generateObstacle(obstacles, dt, 800, math.random(200, FLOOR))
 
     --Desenha no canvas
     love.graphics.setCanvas(canvas)
