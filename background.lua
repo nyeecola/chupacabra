@@ -2,6 +2,7 @@ local background = {}
 
 local cloud_timer = 0
 local trees_timer = 0
+local front_trees_timer = 0
 
 function spawn_cloud()
 	local x = 800
@@ -24,10 +25,31 @@ function spawn_initial_trees()
 	table.insert(trees, #trees+1, {x = x, y = y})
 end
 
+function spawn_initial_front_trees()
+	local x = -50
+	local y = math.random(480,500)
+	table.insert(front_trees, #front_trees+1, {x = x, y = y})
+
+	x = 200
+	y = math.random(480,500)
+	table.insert(front_trees, #front_trees+1, {x = x, y = y})
+end
+
 function spawn_trees()
 	local x = 800
 	local y = math.random(290, 310)
 	table.insert(trees, #trees+1, {x = x, y = y})
+end
+
+function spawn_front_trees()
+	local x = 800
+	local y = math.random(480, 500)
+	table.insert(front_trees, #front_trees+1, {x = x, y = y})
+end
+
+function spawn_ground()
+	ground_x = 0
+	ground_y = 450
 end
 
 function spawn_moon()
@@ -94,6 +116,7 @@ function background.enter_bg()
 	-- Table wich contains all clouds
 	clouds = {}
 	trees = {}
+	front_trees = {}
 	-- Clock for cloud spawning
 	
 	-- Red Green and Blue variables for color shifting
@@ -103,19 +126,22 @@ function background.enter_bg()
 	sun_image = love.graphics.newImage("imagens/sun.png")
 	moon_image = love.graphics.newImage("imagens/moon.png")
 	trees_image = love.graphics.newImage("imagens/trees.png")
+	ground_image = love.graphics.newImage("imagens/ground.png")
 
 	-- Spawning the first cloud
 	spawn_cloud()
 	spawn_sun()
 	spawn_moon()
 	spawn_initial_trees()
-	spawn_trees()
+	spawn_initial_front_trees()
+	spawn_ground()
+
 
 	day_state = 1
 	night_state = 1
 
 
-	day_cicle_speed = 17
+	day_cicle_speed = 0.1
 
 end
 
@@ -164,10 +190,29 @@ function background.update_bg(dt)
 		trees[i].x = trees[i].x - 30 * dt
 	end
 
-	-- Removing clouds
+	-- Removing trees
 	for i = #trees, 1, -1 do
-		if trees[i].x < -500 then
+		if trees[i].x < -800 then
 			table.remove(trees, i)
+		end
+	end
+
+	-- Spawning front trees
+	front_trees_timer = front_trees_timer + dt
+	if front_trees_timer > math.random(2, 6) then
+		spawn_front_trees()
+		front_trees_timer = 0
+	end
+
+	-- Moving front trees
+	for i = 1, #front_trees do
+		front_trees[i].x = front_trees[i].x - 70 * dt
+	end
+
+	-- Removing front trees
+	for i = #front_trees, 1, -1 do
+		if front_trees[i].x < -800 then
+			table.remove(front_trees, i)
 		end
 	end
 
@@ -183,9 +228,15 @@ function background.draw_bg()
 	for i = 1, #clouds do
 		love.graphics.draw(cloud_image, clouds[i].x, clouds[i].y)
 	end
+
+	love.graphics.draw(ground_image, ground_x, ground_y)
 	
 	for i = 1, #trees do
 		love.graphics.draw(trees_image, trees[i].x, trees[i].y)
+	end
+
+	for i = 1, #front_trees do
+		love.graphics.draw(trees_image, front_trees[i].x, front_trees[i].y)
 	end
 end
 
