@@ -13,6 +13,8 @@ FLOOR = 500
 
 local menu = {}
 game = {}
+bambam = false
+local bambam_dt = 0
 local pause = {}
 local gameover = {}
 local canvas = love.graphics.newCanvas()
@@ -106,6 +108,14 @@ function game:update(dt)
     drawGoats(goats)
     drawBar(staminaBar, cc)
     love.graphics.setCanvas()
+
+    if bambam == true and bambam_dt < 5 then
+        bambam_dt = bambam_dt + dt
+    elseif bambam == true and bambam_dt >= 5 then
+        bambam = false
+        bambam_dt = 0
+    end
+    
 end
 
 function game:draw()
@@ -126,6 +136,7 @@ function game:draw()
     love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)
 
     drawObstacles(obstacles)
+
 end
 
 function game:keypressed(k)

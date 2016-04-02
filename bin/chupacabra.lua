@@ -50,14 +50,26 @@ function drawCC(cc)
     love.graphics.setColor(255, 255, 255)
     if cc.cooldown > 0 then
         if cc.cooldown > 1.5 then
-            love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            if bambam == false then
+                love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            else
+                love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            end
         elseif cc.cooldown > 1 then
 
         elseif cc.cooldown > 0.5 then
-            love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            if bambam == false then
+                love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            else
+                love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            end
         end
     else
-        love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+        if bambam == false then
+            love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+        else
+            love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+        end
     end
 end
 
@@ -71,7 +83,7 @@ function keysCC(k, cc)
 end
 
 function collisionDetectionCC(cc, obstacles)
-    if cc.cooldown <= 0 then
+    if cc.cooldown <= 0 and bambam == false then
         for i = 1, #obstacles do
             if cc.x < obstacles[i].x + obstacles[i].width and
                obstacles[i].x < cc.x + cc.img[frame]:getWidth()*cc.scale and
