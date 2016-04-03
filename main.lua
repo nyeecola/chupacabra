@@ -390,6 +390,7 @@ function game:update(dt)
         bambam_dt = bambam_dt + dt
     elseif bambam == true and bambam_dt >= 2.5 then
         bambam = false
+        unkeysCC('down', cc)
         bambam_dt = 0
     end
 
@@ -418,6 +419,10 @@ end
 
 function game:keypressed(k)
     keysCC(k, cc)
+end
+
+function game:keyreleased(k)
+    unkeysCC(k, cc)
 end
 
 function game:leave()
