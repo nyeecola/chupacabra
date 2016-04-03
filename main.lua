@@ -36,6 +36,7 @@ function info:enter()
     info_music    = true
     info_select   = 0
     info_hi       = 0
+    helio         = 0
 
     -- Images
     info_returnButton    = love.graphics.newImage("assets/menu_quitButton.jpg")
@@ -310,6 +311,10 @@ function game:enter()
 
 	background.enter_bg()
 
+    --Images
+    helio_pedrini        = love.graphics.newImage("assets/helio.png")
+
+    --Sounds
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
     --explosionSound = love.audio.newSource("assets/explosion.ogg", "static")
@@ -319,6 +324,8 @@ function game:enter()
     wheySound[3] = love.audio.newSource("assets/trapezio-descendente.ogg", "static")
     gameOverSound = love.audio.newSource("assets/game-over.ogg", "static")
     collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
+    helio_toasty          = love.audio.newSource("assets/TOASTY!.ogg")
+
 
 end
 
@@ -424,7 +431,13 @@ function game:draw()
 
     --Score
     love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)
+    helio = tonumber(string.format("%.0f", score))
 
+    --helio pedrine
+    if helio == 102 or helio == 358 then
+        love.audio.play(helio_toasty);
+        love.graphics.draw(helio_pedrini,650,450);
+    end
     -- draw foreground
     background.draw_fg()
 end
