@@ -39,7 +39,7 @@ function info:enter()
     helio         = 0
 
     -- Images
-    info_returnButton    = love.graphics.newImage("assets/menu_quitButton.jpg")
+    info_returnButton    = love.graphics.newImage("assets/menu_quitButton.png")
     info_selectedButton1 = love.graphics.newImage("assets/menu_selectedButton1.png")
     info_selectedButton2 = love.graphics.newImage("assets/menu_selectedButton2.png")
     info_background      = love.graphics.newImage("assets/info_background.png")
@@ -173,9 +173,9 @@ function menu:enter()
     -- Images
     background.enter_bg()
     menu_title           = love.graphics.newImage("assets/menu_title.png")
-    menu_startButton     = love.graphics.newImage("assets/menu_startButton.jpg")
-    menu_infoButton      = love.graphics.newImage("assets/menu_infoButton.jpg")
-    menu_quitButton      = love.graphics.newImage("assets/menu_quitButton.jpg")
+    menu_startButton     = love.graphics.newImage("assets/menu_startButton.png")
+    menu_infoButton      = love.graphics.newImage("assets/menu_infoButton.png")
+    menu_quitButton      = love.graphics.newImage("assets/menu_quitButton.png")
     menu_musicButtonOn   = love.graphics.newImage("assets/menu_musicButtonOn.png")
     menu_musicButtonOff  = love.graphics.newImage("assets/menu_musicButtonOff.png")
     menu_soundButtonOn   = love.graphics.newImage("assets/menu_soundButtonOn.png")
@@ -184,7 +184,7 @@ function menu:enter()
     menu_selectedButton2 = love.graphics.newImage("assets/menu_selectedButton2.png")
 
    -- Sounds
-    menu_backgroundMusic  = love.audio.newSource("assets/teste.ogg","stream")
+    menu_backgroundMusic  = love.audio.newSource("assets/musica-menu-inicial.ogg","stream")
     menu_buttonPressSound = love.audio.newSource("assets/teste.ogg","static")
     menu_easterEggSound   = love.audio.newSource("assets/teste.ogg","static")
 
@@ -317,6 +317,8 @@ function game:enter()
     --Sounds
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
+    backgroundSound = love.audio.newSource("assets/musica-jogo.ogg", "stream")
+
     --explosionSound = love.audio.newSource("assets/explosion.ogg", "static")
     wheySound = {}
     wheySound[1] = love.audio.newSource("assets/hora-do-show.ogg", "static")
@@ -326,7 +328,7 @@ function game:enter()
     collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
     helio_toasty          = love.audio.newSource("assets/TOASTY!.ogg")
 
-
+    love.audio.play(backgroundSound)
 end
 
 function game:update(dt)
@@ -460,6 +462,7 @@ function game:keyreleased(k)
 end
 
 function game:leave()
+    love.audio.stop(backgroundSound)
     cc = nil
     obstacles = nil
 end
