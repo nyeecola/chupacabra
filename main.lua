@@ -197,7 +197,7 @@ function menu:draw()
     -- Static
     background.draw_bg()
     background.draw_fg()
-    love.graphics.draw(menu_title, 150, 70)
+    love.graphics.draw(menu_title, 250, 15, 0, 0.65, 0.65)
     love.graphics.draw(menu_startButton, 294, 190)
     love.graphics.draw(menu_infoButton, 294, 279)
     love.graphics.draw(menu_quitButton, 294, 368)
@@ -291,12 +291,13 @@ end
 function game:enter()
     font = love.graphics.newFont("assets/font.ttf", 20)
     love.graphics.setFont(font)
-    
+
     score = 0
 
     obstacles = {}
     goats = {}
     wheys = {}
+    explosions = {}
 
     staminaBar = {}
     defineBar(staminaBar)
@@ -311,6 +312,7 @@ function game:enter()
 
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
+    --explosionSound = love.audio.newSource("assets/explosion.ogg", "static")
     wheySound = {}
     wheySound[1] = love.audio.newSource("assets/hora-do-show.ogg", "static")
     wheySound[2] = love.audio.newSource("assets/bodybuilder-porra.ogg", "static")
@@ -327,6 +329,15 @@ function game:update(dt)
     if cc.stamina < 5 and spd_timer > 0.3 then
         cc.stamina = cc.stamina + 7
         spd_timer = 0
+    end
+
+    --Att explosoes
+    for i = 1, #explosions do
+        explosions[i].timer = explosions[i].timer + dt
+        if explosions[i].timer > 0.1 then
+            explosions[i].frame = explosions[i].frame +1
+            explosions[i].timer = 0
+        end
     end
 
     --Atualiza fundo
@@ -384,6 +395,7 @@ function game:update(dt)
     drawPeople(people)
     drawGoats(goats)
     drawBar(staminaBar, cc)
+    drawExplosions(explosions)
     love.graphics.setCanvas()
 
     if bambam == true and bambam_dt < 2.5 then
@@ -408,7 +420,7 @@ function game:draw()
     canvas:clear()
 
     --FPS
-    love.graphics.print(love.timer.getFPS(), 0, 0)
+    --love.graphics.print(love.timer.getFPS(), 0, 0)
 
     --Score
     love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)
@@ -419,6 +431,15 @@ end
 
 function game:keypressed(k)
     keysCC(k, cc)
+    if k == "return" then
+        gamestate.push(pause)
+    end
+end
+
+function game:focus(f)
+    if not f then
+        gamestate.push(pause)
+    end
 end
 
 function game:keyreleased(k)
@@ -428,6 +449,16 @@ end
 function game:leave()
     cc = nil
     obstacles = nil
+end
+
+function pause:draw()
+    love.graphics.print("PAUSE", 360, love.graphics.getHeight()/2)
+end
+
+function pause:keypressed(key, code)
+    if key == "return" then
+        gamestate.pop()
+    end
 end
 
 function gameover:enter()
@@ -462,7 +493,8 @@ function gameover:draw()
     love.graphics.print("Score: " .. string.format("%.0f", score), 300, 300)
     font = love.graphics.newFont("assets/font.ttf", 20)
     love.graphics.setFont(font)
-    love.graphics.print("Press Return to Restart", 250, 560)
+    love.graphics.print("Press Return to Restart", 250, 540)
+    love.graphics.print("Press 'M' to Menu", 250, 560)
     love.graphics.draw(imgs.cc, 470, 400, math.pi/2, 0.75, 0.75)
     love.graphics.draw(imgs.campfire[frame], 340, 370, 0, 0.6, 0.6)
     love.graphics.setColor(255, 255, 255, 140)
@@ -475,6 +507,9 @@ function gameover:keypressed(k)
     if k == "return" then
         gamestate.switch(game)
     end
+    if k == "m" then
+        gamestate.switch(menu)
+    end
 end
 
 function love.load()
@@ -484,4 +519,10 @@ function love.load()
     gamestate.registerEvents()
     gamestate.switch(intro)
     --gamestate.switch(game)
+end
+
+function love.keypressed(k)
+    if k == "escape" then
+        love.event.push("quit")
+    end
 end
