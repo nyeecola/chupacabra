@@ -494,7 +494,7 @@ function gameover:enter()
                         love.graphics.newImage("assets/fogueira3.png")}}
     timer = 0
     frame = 1
-    gameoverMusic  = love.audio.newSource("assets/musica-menu-inicial.ogg","stream")
+    gameoverMusic  = love.audio.newSource("assets/musica-game-over.ogg","stream")
     love.audio.play(gameoverMusic)
 end
 
