@@ -39,7 +39,7 @@ function info:enter()
     helio         = 0
 
     -- Images
-    info_returnButton    = love.graphics.newImage("assets/menu_quitButton.jpg")
+    info_returnButton    = love.graphics.newImage("assets/menu_quitButton.png")
     info_selectedButton1 = love.graphics.newImage("assets/menu_selectedButton1.png")
     info_selectedButton2 = love.graphics.newImage("assets/menu_selectedButton2.png")
     info_background      = love.graphics.newImage("assets/info_background.png")
@@ -173,9 +173,9 @@ function menu:enter()
     -- Images
     background.enter_bg()
     menu_title           = love.graphics.newImage("assets/menu_title.png")
-    menu_startButton     = love.graphics.newImage("assets/menu_startButton.jpg")
-    menu_infoButton      = love.graphics.newImage("assets/menu_infoButton.jpg")
-    menu_quitButton      = love.graphics.newImage("assets/menu_quitButton.jpg")
+    menu_startButton     = love.graphics.newImage("assets/menu_startButton.png")
+    menu_infoButton      = love.graphics.newImage("assets/menu_infoButton.png")
+    menu_quitButton      = love.graphics.newImage("assets/menu_quitButton.png")
     menu_musicButtonOn   = love.graphics.newImage("assets/menu_musicButtonOn.png")
     menu_musicButtonOff  = love.graphics.newImage("assets/menu_musicButtonOff.png")
     menu_soundButtonOn   = love.graphics.newImage("assets/menu_soundButtonOn.png")
