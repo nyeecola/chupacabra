@@ -26,6 +26,7 @@ local bambam_dt = 0
 local pause = {}
 local gameover = {}
 local canvas = love.graphics.newCanvas()
+local timer_multi = 0
 
 function info:enter()
 
@@ -306,13 +307,19 @@ function game:enter()
     cc = {}
     defineCC(cc, FLOOR)
 
+    -- multidao
     people = {}
-    definePeople(people)
+    table.insert(people, definePeople(0, 400, "andre"))
+    table.insert(people, definePeople(40, 400, "dani"))
+    table.insert(people, definePeople(15, 440, "clarice"))
+    table.insert(people, definePeople(80, 400, "miguel"))
+    table.insert(people, definePeople(65, 440, "italo"))
+
 
 	background.enter_bg()
 
     --Images
-    helio_pedrini        = love.graphics.newImage("assets/helio.png")
+    helio_pedrini = love.graphics.newImage("assets/helio.png")
 
     --Sounds
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
@@ -356,6 +363,7 @@ function game:update(dt)
     updateCC(cc, FLOOR, dt)
     updateGoats(goats, FLOOR, dt)
     updateWheys(wheys, FLOOR-40, dt)
+    updatePeople(people, dt)
 
     --Atualiza pontuacao
     score = score + dt
@@ -405,6 +413,7 @@ function game:update(dt)
     drawGoats(goats)
     drawBar(staminaBar, cc)
     drawExplosions(explosions)
+    drawPeople(people, math.random(1,2))
     love.graphics.setCanvas()
 
     if bambam == true and bambam_dt < 2.5 then
