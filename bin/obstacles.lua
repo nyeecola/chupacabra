@@ -94,7 +94,7 @@ function createRandomObstacle()
             {r = 0, g = 0, b = 255},
             fat_bird,
             800,
-            math.random(280, 400)
+            math.random(280, 380)
         )
     }
 

@@ -18,6 +18,12 @@ function defineCC(cc, floor)
     cc.img_bam[2] = love.graphics.newImage("assets/cc_bam/02_bam.png")
     cc.img_bam[3] = love.graphics.newImage("assets/cc_bam/03_bam.png")
     cc.img_bam[4] = love.graphics.newImage("assets/cc_bam/04_bam.png")
+    cc.img_down = love.graphics.newImage('assets/agachado4.png')
+    cc.img_up = {}
+    cc.img_up[1] = love.graphics.newImage("assets/cc/01.png")
+    cc.img_up[2] = love.graphics.newImage("assets/cc/02.png")
+    cc.img_up[3] = love.graphics.newImage("assets/cc/03.png")
+    cc.img_up[4] = love.graphics.newImage("assets/cc/04.png")
 end
 
 function updateCC(cc, floor, dt)
@@ -80,6 +86,28 @@ function keysCC(k, cc)
           --cc.x = cc.x + i
         --end
         love.audio.play(jumpSound)
+    end
+
+    if k == 'down' then
+        if bambam == false and cc.y >= FLOOR - cc.img_up[1]:getHeight() * cc.scale  then
+            for i = 1, 4 do
+                cc.img[i] = cc.img_down
+            end
+            cc.y = FLOOR - cc.img_down:getHeight() * cc.scale
+        end
+    end
+end
+
+function unkeysCC(k, cc)
+    if k == 'down' then
+        if bambam == false then
+            for i = 1, 4 do
+                cc.img[i] = cc.img_up[i]
+            end
+            if cc.y >= FLOOR - cc.img_up[1]:getHeight() * cc.scale then
+                cc.y = FLOOR - cc.img_up[1]:getHeight() * cc.scale
+            end
+        end
     end
 end
 
