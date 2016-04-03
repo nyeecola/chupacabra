@@ -420,7 +420,7 @@ function game:draw()
     canvas:clear()
 
     --FPS
-    love.graphics.print(love.timer.getFPS(), 0, 0)
+    --love.graphics.print(love.timer.getFPS(), 0, 0)
 
     --Score
     love.graphics.print("Score: " .. string.format("%.0f", score), 600, 20)

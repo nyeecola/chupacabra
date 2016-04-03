@@ -95,6 +95,9 @@ end
 
 function keysCC(k, cc)
     if k == "up" and cc.y + cc.img[frame]:getHeight() * cc.scale >= FLOOR then
+        if cc.img[1] == cc.img_down then
+            unkeysCC("down", cc)
+        end
         cc.v = 200
         --for i = 5, 15 do
           --cc.x = cc.x + i
