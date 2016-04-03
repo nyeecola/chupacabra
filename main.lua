@@ -184,7 +184,7 @@ function menu:enter()
     menu_selectedButton2 = love.graphics.newImage("assets/menu_selectedButton2.png")
 
    -- Sounds
-    menu_backgroundMusic  = love.audio.newSource("assets/teste.ogg","stream")
+    menu_backgroundMusic  = love.audio.newSource("assets/musica-menu-inicial.ogg","stream")
     menu_buttonPressSound = love.audio.newSource("assets/teste.ogg","static")
     menu_easterEggSound   = love.audio.newSource("assets/teste.ogg","static")
 
@@ -317,6 +317,8 @@ function game:enter()
     --Sounds
     jumpSound = love.audio.newSource("assets/pulo.ogg", "static")
     goatSound = love.audio.newSource("assets/cabra-morrendo.ogg", "static")
+    backgroundSound = love.audio.newSource("assets/musica-jogo.ogg", "stream")
+
     --explosionSound = love.audio.newSource("assets/explosion.ogg", "static")
     wheySound = {}
     wheySound[1] = love.audio.newSource("assets/hora-do-show.ogg", "static")
@@ -326,7 +328,7 @@ function game:enter()
     collisionSound = love.audio.newSource("assets/colisao.ogg", "static")
     helio_toasty          = love.audio.newSource("assets/TOASTY!.ogg")
 
-
+    love.audio.play(backgroundSound)
 end
 
 function game:update(dt)
@@ -460,6 +462,7 @@ function game:keyreleased(k)
 end
 
 function game:leave()
+    love.audio.stop(backgroundSound)
     cc = nil
     obstacles = nil
 end
