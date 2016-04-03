@@ -62,13 +62,27 @@ function drawCC(cc)
                 love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
             end
         elseif cc.cooldown > 1 then
-
+            love.graphics.setColor(255, 255, 255, 180)
+            if bambam == false then
+                love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            else
+                love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            end
+            love.graphics.setColor(255, 255, 255)
         elseif cc.cooldown > 0.5 then
             if bambam == false then
                 love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
             else
                 love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
             end
+        else
+            love.graphics.setColor(255, 255, 255, 180)
+            if bambam == false then
+                love.graphics.draw(cc.img[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            else
+                love.graphics.draw(cc.img_bam[frame], cc.x, cc.y, 0, cc.scale, cc.scale)
+            end
+            love.graphics.setColor(255, 255, 255)
         end
     else
         if bambam == false then
