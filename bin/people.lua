@@ -1,11 +1,32 @@
-function definePeople(people)
-    people.x = 10
-    people.y = 450
-    people.scale = 0.3
-    people.img = love.graphics.newImage("assets/people.png")
+local time = 0
+local pframe = 1
+
+function definePeople(x, y, name)
+    local people = {}
+    people.x = x
+    people.y = y
+    people.scale = 0.45
+    people.img = {}
+    people.img[1] = love.graphics.newImage("assets/multidao/" .. name .. "01.png")
+    people.img[2] = love.graphics.newImage("assets/multidao/" .. name .. "02.png")
+    return people
 end
 
 function drawPeople(people)
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.draw(people.img, people.x, people.y, 0, people.scale, people.scale)
+    for jj = 1, #people do
+        love.graphics.draw(people[jj].img[pframe], people[jj].x, people[jj].y, 0, people[jj].scale, people[jj].scale)
+    end
+end
+
+function updatePeople(people, dt)
+    time = time + dt
+    if time >= 0.45
+        then
+            pframe = pframe + 1
+            time = 0
+        end
+    if pframe == 3
+        then
+            pframe = 1
+        end
 end
