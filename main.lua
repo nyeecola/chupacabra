@@ -494,6 +494,8 @@ function gameover:enter()
                         love.graphics.newImage("assets/fogueira3.png")}}
     timer = 0
     frame = 1
+    gameoverMusic  = love.audio.newSource("assets/musica-menu-inicial.ogg","stream")
+    love.audio.play(gameoverMusic)
 end
 
 function gameover:update(dt)
@@ -535,6 +537,10 @@ function gameover:keypressed(k)
     if k == "m" then
         gamestate.switch(menu)
     end
+end
+
+function gameover:leave()
+    love.audio.stop(gameoverMusic)
 end
 
 function love.load()
