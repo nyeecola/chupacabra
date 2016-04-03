@@ -84,7 +84,7 @@ function twilight(dt)
 	if color_b > 50 then
 		color_b = color_b - 5 * day_cicle_speed * dt
 	end
-	
+
 	if sun_position_y > 600 then
 		day_state = 2
 	end
@@ -130,7 +130,7 @@ function background.enter_bg()
 	trees = {}
 	front_trees = {}
 	-- Clock for cloud spawning
-	
+
 	-- Red Green and Blue variables for color shifting
 	color_r, color_g, color_b = 86,131,209
 	-- Images
@@ -160,14 +160,14 @@ end
 function background.update_bg(dt)
 	-- Spawning clouds
 	cloud_timer = cloud_timer + dt
-	if cloud_timer > math.random(3, 6) then
+	if cloud_timer > math.random(8, 10) then
 		spawn_cloud()
 		cloud_timer = 0
 	end
 
 	-- Moving clouds
 	for i = 1, #clouds do
-		clouds[i].x = clouds[i].x - 125 * dt
+		clouds[i].x = clouds[i].x - (BACKGROUND_SPD - 65) * dt
 	end
 
 	-- Removing clouds
@@ -177,7 +177,7 @@ function background.update_bg(dt)
 		end
 	end
 
-	-- Day state 
+	-- Day state
 	if day_state == 1 then
 		twilight(dt)
 	end
@@ -236,13 +236,13 @@ function background.draw_bg()
 	love.graphics.draw(moon_image, moon_position_x, moon_position_y)
 	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.setBackgroundColor(color_r, color_g, color_b)
-	
+
 	for i = 1, #clouds do
 		love.graphics.draw(cloud_image, clouds[i].x, clouds[i].y)
 	end
 
 	love.graphics.draw(ground_image, ground_x, ground_y)
-	
+
 	for i = 1, #trees do
 		love.graphics.draw(trees_image, trees[i].x, trees[i].y)
 	end
