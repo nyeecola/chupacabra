@@ -63,10 +63,12 @@ end
 -- function to procedurally generate obstacles
 function createRandomObstacle()
     local fat_bird = {}
+    local thin_bird = {}
     local campfire = {}
     local trunk = {}
     for i = 1, 3 do
         fat_bird[i] = love.graphics.newImage('assets/birdFat' .. i .. '.png')
+        thin_bird[i] = love.graphics.newImage('assets/blueBird' .. i .. '.png')
         campfire[i] = love.graphics.newImage('assets/fogueira' .. i .. '.png')
         trunk[i] = love.graphics.newImage('assets/tronco.png')
     end
@@ -94,11 +96,19 @@ function createRandomObstacle()
             {r = 0, g = 0, b = 255},
             fat_bird,
             800,
-            math.random(280, 380)
+            math.random(280, 375)
+        ),
+        newObstacle(
+            thin_bird[1]:getHeight() * SCALE,
+            thin_bird[1]:getWidth() * SCALE,
+            {r = 0, g = 0, b = 255},
+            thin_bird,
+            800,
+            math.random(280, 375)
         )
     }
 
-    local selected = math.random(3)
+    local selected = math.random(4)
 
     return obstacles[selected]
 end
